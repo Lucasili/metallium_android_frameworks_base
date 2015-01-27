@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.tv;
 
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.service.notification.NotificationListenerService.RankingMap;
 import android.service.notification.StatusBarNotification;
 import android.view.View;
@@ -72,6 +73,13 @@ public class TvStatusBar extends BaseStatusBar {
 
     @Override
     public void setSystemUiVisibility(int vis, int mask) {
+        if ((mask & View.SYSTEM_UI_FLAG_LOW_PROFILE) != 0) {
+            try {
+                mWindowManagerService.statusBarVisibilityChanged(
+                        vis & View.SYSTEM_UI_FLAG_LOW_PROFILE);
+            } catch (RemoteException ex) {
+            }
+        }
     }
 
     @Override
