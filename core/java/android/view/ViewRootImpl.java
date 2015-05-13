@@ -56,7 +56,6 @@ import android.util.AndroidRuntimeException;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Slog;
-import android.util.TimeUtils;
 import android.util.TypedValue;
 import android.view.Surface.OutOfResourcesException;
 import android.view.View.AttachInfo;
@@ -1515,7 +1514,6 @@ public final class ViewRootImpl implements ViewParent,
                         // to resume them
                         mDirty.set(0, 0, mWidth, mHeight);
                     }
-                    mChoreographer.mFrameInfo.addFlags(FrameInfo.FLAG_WINDOW_LAYOUT_CHANGED);
                 }
                 final int surfaceGenerationId = mSurface.getGenerationId();
                 relayoutResult = relayoutWindow(params, viewVisibility, insetsPending);
@@ -2519,9 +2517,6 @@ public final class ViewRootImpl implements ViewParent,
             }
         }
 
-        mAttachInfo.mDrawingTime =
-                mChoreographer.getFrameTimeNanos() / TimeUtils.NANOS_PER_MS;
-
         if (!dirty.isEmpty() || mIsAnimating || accessibilityFocusDirty) {
             if (mAttachInfo.mHardwareRenderer != null && mAttachInfo.mHardwareRenderer.isEnabled()) {
                 // If accessibility focus moved, always invalidate the root.
@@ -2647,6 +2642,7 @@ public final class ViewRootImpl implements ViewParent,
 
             dirty.setEmpty();
             mIsAnimating = false;
+            attachInfo.mDrawingTime = SystemClock.uptimeMillis();
             mView.mPrivateFlags |= View.PFLAG_DRAWN;
 
             if (DEBUG_DRAW) {
@@ -5799,16 +5795,6 @@ public final class ViewRootImpl implements ViewParent,
             mPendingInputEventCount -= 1;
             Trace.traceCounter(Trace.TRACE_TAG_INPUT, mPendingInputEventQueueLengthCounterName,
                     mPendingInputEventCount);
-
-            long eventTime = q.mEvent.getEventTimeNano();
-            long oldestEventTime = eventTime;
-            if (q.mEvent instanceof MotionEvent) {
-                MotionEvent me = (MotionEvent)q.mEvent;
-                if (me.getHistorySize() > 0) {
-                    oldestEventTime = me.getHistoricalEventTimeNano(0);
-                }
-            }
-            mChoreographer.mFrameInfo.updateInputEventTime(eventTime, oldestEventTime);
 
             deliverInputEvent(q);
         }
