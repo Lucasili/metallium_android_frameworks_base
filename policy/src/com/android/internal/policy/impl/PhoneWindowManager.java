@@ -1392,11 +1392,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         mDreamManagerInternal = LocalServices.getService(DreamManagerInternal.class);
 
         mMetaGestures = new MetaGesturesListener(context, new MetaGesturesListener.Callbacks() {
-                    @Override
-                    public void onSwipeThreeFinger() {
-                        mHandler.post(mScreenshotRunnable);
-                    }
-               });
+              @Override
+              public void onSwipeThreeFinger() {
+                  mHandler.postDelayed(mScreenshotRunnable, 350L);
+              }
+        });
         mHandler = new PolicyHandler();
         mWakeGestureListener = new MyWakeGestureListener(mContext, mHandler);
         mOrientationListener = new MyOrientationListener(mContext, mHandler);
