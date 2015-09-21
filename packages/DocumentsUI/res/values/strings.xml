@@ -121,5 +121,4 @@
 
     <!-- Title of dialog when prompting user to select an app to share documents with [CHAR LIMIT=32] -->
     <string name="share_via">Share via</string>
-
 </resources>
