@@ -121,4 +121,7 @@
 
   <!-- Proximity check on screen on default -->
   <java-symbol type="bool" name="config_proximityCheckOnWakeEnabledByDefault" />
+
+  <!-- Config to disable showing ringtones from removable storage -->
+  <java-symbol type="bool" name="config_excludeRingtonesFromRemovableStorage" />
 </resources>
