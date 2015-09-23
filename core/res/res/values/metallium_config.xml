@@ -25,7 +25,4 @@
     <!-- Timeout in MS for how long you have to long-press the back button to
          kill the foreground app. -->
     <integer name="config_backKillTimeout">2000</integer>
-
-    <!-- Config to disable showing ringtones from removable storage -->
-    <bool name="config_excludeRingtonesFromRemovableStorage">false</bool>
 </resources>
