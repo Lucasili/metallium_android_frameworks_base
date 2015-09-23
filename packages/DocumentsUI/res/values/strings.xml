@@ -121,4 +121,57 @@
 
     <!-- Title of dialog when prompting user to select an app to share documents with [CHAR LIMIT=32] -->
     <string name="share_via">Share via</string>
+
+    <!-- Action bar title when the app is in standalone (file manager) mode [CHAR LIMIT=32] -->
+    <string name="title_standalone">Files</string>
+
+    <!-- Toast shown after successfully deleting files -->
+    <string name="toast_success_delete">Files deleted</string>
+
+    <!-- Title of the Delete confirmation dialog -->
+    <string name="dialog_delete_confirm_title">Delete files?</string>
+
+    <!-- Text shown in a toast when the user copies files -->
+    <plurals name="files_copied">
+        <item quantity="one">The file has been put in the clipboard</item>
+        <item quantity="other">%d files have been put in the clipboard</item>
+    </plurals>
+
+    <!-- Text shown in a toast when the user pastes files -->
+    <plurals name="files_pasted">
+        <item quantity="one">The file has been pasted. Upload might be finishing in background.</item>
+        <item quantity="other">%d files have been pasted. Upload might be finishing in background.</item>
+    </plurals>
+
+    <!-- Text show in the progress dialog while files are being copied -->
+    <string name="copy_in_progress">Copying...</string>
+
+    <!-- Text show in the progress dialog while files are being deleted -->
+    <string name="delete_in_progress">Deleting...</string>
+
+    <plurals name="dialog_delete_confirm_message">
+        <item quantity="one">This file will be permanently deleted!</item>
+        <item quantity="other">This will permanently delete the %d files selected!</item>
+    </plurals>
+
+    <plurals name="files_pasted_failed">
+        <item quantity="one">The file couldn\'t be pasted.</item>
+        <item quantity="other">Some files couldn\'t be pasted.</item>
+    </plurals>
+
+    <!-- Copy files -->
+    <string name="copy_message">Copying %1$d file(s)</string>
+    <string name="copy_percent_bytes" formatted="false">"%1dB/%2dB"</string>
+    <string name="copy_percent_megas" formatted="false">"%1dMB/%2dMB"</string>
+
+    <!-- Folder already exists -->
+    <string name="folder_exists">Folder \"%1$s\" already exists. Please use another name.</string>
+    <!-- Folder name empty -->
+    <string name="folder_name_empty">Folder name cannot be empty.</string>
+
+    <!-- Menu rename item -->
+    <string name="menu_rename">Rename</string>
+    <string name="menu_rename_doc">Rename document</string>
+    <string name="document_name_empty">Name cannot be empty.</string>
+    <string name="document_exists">Document \"%1$s\" already exists. Please use another name.</string>
 </resources>

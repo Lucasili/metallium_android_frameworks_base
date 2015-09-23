@@ -533,7 +533,7 @@ public class MediaScanner
                     }
                 }
 
-                if (isDrmEnabled() && path != null && (path.endsWith(".dcf") || path.endsWith(".dm"))) {
+                if (isDrmEnabled() && MediaFile.isDrmFileType(mFileType)) {
                     mFileType = getFileTypeFromDrm(path);
                 }
             }
@@ -1146,10 +1146,9 @@ public class MediaScanner
                 mDrmManagerClient = new DrmManagerClient(mContext);
             }
 
-            String realpath = path.replace("/storage/emulated/0", "/storage/emulated/legacy");
-            if (mDrmManagerClient.canHandle(realpath, null)) {
+            if (mDrmManagerClient.canHandle(path, null)) {
                 mIsDrm = true;
-                String drmMimetype = mDrmManagerClient.getOriginalMimeType(realpath);
+                String drmMimetype = mDrmManagerClient.getOriginalMimeType(path);
                 if (drmMimetype != null) {
                     mMimeType = drmMimetype;
                     resultFileType = MediaFile.getFileTypeForMimeType(drmMimetype);
