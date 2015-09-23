@@ -1853,7 +1853,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
             // Three finger Gesture
             boolean threeFingerGesture = Settings.System.getIntForUser(resolver,
-                    Settings.System.THREE_FINGER_SWIPE_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
+                    Settings.System.THREE_FINGER_SWIPE_GESTURE, 1, UserHandle.USER_CURRENT) == 1;
             enableSwipeThreeFingerGesture(threeFingerGesture);
 
             // Configure wake gesture.
