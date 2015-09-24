@@ -35,7 +35,6 @@ import android.provider.Settings;
 import android.provider.Settings.System;
 import android.util.Log;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -232,8 +231,8 @@ public class RingtoneManager {
     
     private boolean mStopPreviousRingtone = true;
     private Ringtone mPreviousRingtone;
+
     private boolean mIncludeDrm;
-    private String mExcludedExternalStorageDir = null;
     
     /**
      * Constructs a RingtoneManager. This constructor is recommended as its
@@ -244,7 +243,6 @@ public class RingtoneManager {
     public RingtoneManager(Activity activity) {
         mContext = mActivity = activity;
         setType(mType);
-        mExcludedExternalStorageDir = getExcludedExternalStorageDir();
     }
 
     /**
@@ -257,7 +255,6 @@ public class RingtoneManager {
     public RingtoneManager(Context context) {
         mContext = context;
         setType(mType);
-        mExcludedExternalStorageDir = getExcludedExternalStorageDir();
     }
 
     /**
@@ -511,23 +508,14 @@ public class RingtoneManager {
     private Cursor getMediaRingtones() {
          // Get the external media cursor. First check to see if it is mounted.
         final String status = Environment.getExternalStorageState();
-
-        if (status.equals(Environment.MEDIA_MOUNTED) ||
-                status.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
-            String whereClause = constructBooleanTrueWhereClause(mFilterColumns);
-            if (mExcludedExternalStorageDir != null) {
-                whereClause += " AND " + MediaStore.MediaColumns.DATA + " NOT LIKE '" +
-                        mExcludedExternalStorageDir + "%'";
-            }
-            return query(
+        
+        return (status.equals(Environment.MEDIA_MOUNTED) ||
+                    status.equals(Environment.MEDIA_MOUNTED_READ_ONLY))
+                ? query(
                     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, MEDIA_COLUMNS,
                     constructBooleanTrueWhereClause(mFilterColumns, mIncludeDrm), null,
                     MediaStore.Audio.Media.DEFAULT_SORT_ORDER)
                 : null;
-                    whereClause, null,
-                    MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-        }
-        return null;
     }
     
     private void setFilterColumnsList(int type) {
@@ -718,18 +706,6 @@ public class RingtoneManager {
         } else {
             return null;
         }
-    }
-
-    private String getExcludedExternalStorageDir() {
-        boolean excludeRemovableStorage = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_excludeRingtonesFromRemovableStorage);
-        if (excludeRemovableStorage) {
-            File secondaryStorageDir = Environment.getSecondaryStorageDirectory();
-            if (!Environment.isExternalStorageEmulated(secondaryStorageDir)) {
-                return secondaryStorageDir.getAbsolutePath();
-            }
-        }
-        return null;
     }
     
     /**
